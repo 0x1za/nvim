@@ -44,7 +44,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Color scheme for editor 
+-- Color scheme for editor
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    https://github.com/folke/lazy.nvim
@@ -70,16 +70,19 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
-
+  --
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
+  { 'LazyVim/LazyVim', import = 'lazyvim.plugins' },
+  { import = 'lazyvim.plugins.extras.lang.python' },
+  { import = 'lazyvim.plugins.extras.lang.go' },
+  { import = 'plugins' },
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -98,16 +101,21 @@ require('lazy').setup({
   },
   {
     'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {} -- this is equalent to setup({}) function
+    event = 'InsertEnter',
+    opts = {}, -- this is equalent to setup({}) function
   },
   {
     'akinsho/toggleterm.nvim',
-    tag = "*",
-    config = true
+    tag = '*',
+    config = true,
   },
   {
-    'thoughtbot/vim-rspec'
+    'thoughtbot/vim-rspec',
+  },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' },
   },
   {
     -- Autocompletion
@@ -127,10 +135,10 @@ require('lazy').setup({
   },
   {
     -- For my time tracking and bragging rights.
-    'wakatime/vim-wakatime'
+    'wakatime/vim-wakatime',
   },
   {
-    'mg979/vim-visual-multi'
+    'mg979/vim-visual-multi',
   },
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
@@ -209,12 +217,22 @@ require('lazy').setup({
     },
   },
 
-   {
-    -- Theme inspired by Atom
-    'nyoom-engineering/oxocarbon.nvim',
+  --{
+  -- Theme inspired by Atom
+  --  'nyoom-engineering/oxocarbon.nvim',
+  --  priority = 1000,
+  --  config = function()
+  --    vim.cmd.colorscheme 'oxocarbon'
+  -- end,
+  -- },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'oxocarbon'
+      require('catppuccin').setup {
+        flavour = 'latte',
+      }
     end,
   },
   {
@@ -263,13 +281,13 @@ require('lazy').setup({
     },
   },
   {
-	  'LukasPietzschmann/telescope-tabs',
-	  requires = { 'nvim-telescope/telescope.nvim' },
-	  config = function()
-		  require'telescope-tabs'.setup{
-			  -- Your custom config :^)
-		  }
-	  end
+    'LukasPietzschmann/telescope-tabs',
+    requires = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      require('telescope-tabs').setup {
+        -- Your custom config :^)
+      }
+    end,
   },
   {
     -- Highlight, edit, and navigate code
